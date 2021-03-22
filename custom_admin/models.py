@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 
 
 class Blog(models.Model):
@@ -25,6 +26,8 @@ class Comment(models.Model):
     body = models.TextField()
     is_active = models.BooleanField(default=True)
     date_created = models.DateTimeField(auto_now_add=True)
+    photo = models.ImageField(blank=True, null=True, upload_to='photos/%y/%m')
+
 
     def __str__(self):
         return self.blog.title

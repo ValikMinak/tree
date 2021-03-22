@@ -1,0 +1,19 @@
+в виртуальном окр -- pip install django-debug-toolbar
+
+installed_apps =['debug_toolbar']
+
+MIDDLEWARE=['debug_toolbar.middleware.DebugToolbarMiddleware']
+
+INTERNAL_IPS=['127.0.0.1',]
+
+и   urlpatterns =[path('__debug__/',include(debug_toolbar.urls))]
+
+------------------------------------------------------------------------------------------------------------------------
+select_related(key) - 'жадная' загрузка связаных данных по внешнему ключу кот имеет тип ForeignKey
+    get_queryset(self):
+        return Man.objects.filter(выборка).select_related(related_name) --- за один запрос тянет и связанные данные
+
+
+prefetch_related(key) - 'жадная' загрузка связаных данных по внешнему ключу кот имеет тип ManyToManyField
+
+------------------------------------------------------------------------------------------------------------------------

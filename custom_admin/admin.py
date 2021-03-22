@@ -67,14 +67,22 @@ class BlogAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(ImportExportModelAdmin):
-    list_display = ('blog', 'body', 'date_created', 'is_active',)
+    list_display = ('blog', 'body', 'date_created', 'is_active', 'get_html_photo',)
     list_editable = ('body', 'is_active',)
     list_filter = ('body',)
+    fields = ('blog', 'body', 'is_active', 'get_html_photo',)
+    readonly_fields = ('date_created', 'get_html_photo',)
 
     # Чтобы создать импотр экспорт качаешь django-import-export
     # создаёшь файл resources (смотри туда), и потом сюда экстендишь
     resource_class = CommentResource
     list_select_related = True
+
+    def get_html_photo(self, object):
+        if object.photo:
+            return mark_safe(f"<img src = '{object.photo.url}' width=50px> ")
+
+    get_html_photo.short_description = "Миниатюра"
 
 
 admin.site.register(Blog, BlogAdmin)
