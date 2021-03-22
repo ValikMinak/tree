@@ -1,3 +1,11 @@
 from django.shortcuts import render
+from django.views.generic import ListView, FormView
+from .forms import *
+from .models import Blog
 
-# Create your views here.
+
+class ViewValidation(FormView):
+    model = Blog
+    form_class = ValidForm
+    template_name = 'custom_admin/validation.html'
+    success_url = '/'

@@ -24,6 +24,7 @@ admin.site.index_title = 'Django Tree (index title)'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include(('custom_admin.urls', 'custom_admin')))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

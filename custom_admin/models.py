@@ -1,3 +1,4 @@
+from django.core.validators import validate_slug, validate_email
 from django.db import models
 from django.utils import timezone
 from django.utils.safestring import mark_safe
@@ -9,7 +10,8 @@ class Blog(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now_add=True)
     is_draft = models.BooleanField(default=True)
-    slug = models.SlugField(max_length=200, null=True)
+    slug = models.SlugField(max_length=200, null=True, validators=[validate_slug])
+    email = models.EmailField(null=True, validators=[validate_email])
     category = models.ManyToManyField('Category')
 
     def __str__(self):
@@ -27,7 +29,6 @@ class Comment(models.Model):
     is_active = models.BooleanField(default=True)
     date_created = models.DateTimeField(auto_now_add=True)
     photo = models.ImageField(blank=True, null=True, upload_to='photos/%y/%m')
-
 
     def __str__(self):
         return self.blog.title
