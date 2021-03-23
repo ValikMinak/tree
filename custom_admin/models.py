@@ -30,6 +30,7 @@ class Comment(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     photo = models.ImageField(blank=True, null=True, upload_to='photos/%y/%m')
     active_name = models.CharField(max_length=100, blank=True, null=True)
+    price = models.DecimalField(max_digits=5, decimal_places=2, null=True)
 
     def __str__(self):
         return self.blog.title

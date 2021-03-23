@@ -81,12 +81,33 @@ class CommentAdminForm(ModelForm):
             })
 
 
+class CommentListFilter(admin.SimpleListFilter):
+    def queryset(self, request, queryset):
+        if self.value() == 'low':
+            return queryset.filter(price__lte=100)
+        elif self.value() == 'medium':
+            return queryset.filter(price__gt=100,
+                                   price__lt=500)
+        elif self.value() == 'high':
+            return queryset.filter(price__gte=500)
+
+    title = 'Hey'
+    parameter_name = 'HEY'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('low', 'Низкая цена'),
+            ('middle', 'Средняя цена'),
+            ('high', 'Высокая цена')
+        )
+
+
 class CommentAdmin(ImportExportModelAdmin):
     form = CommentAdminForm
     change_form_template = 'custom_admin/form_for_active.html'
-    list_display = ('blog', 'body', 'date_created', 'is_active', 'get_html_photo',)
+    list_display = ('blog', 'body', 'date_created', 'price', 'is_active', 'get_html_photo',)
     list_editable = ('body', 'is_active',)
-    list_filter = ('body',)
+    list_filter = (CommentListFilter,)
     fields = ('blog', 'body', ('active_name', 'is_active',), 'get_html_photo',)
     readonly_fields = ('date_created', 'get_html_photo',)
 
