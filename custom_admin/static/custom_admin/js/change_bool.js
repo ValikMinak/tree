@@ -6,7 +6,7 @@ window.addEventListener("load", function () {
             let a = django.jQuery('.module > table > tbody > .has_original')
             django.jQuery.each(a, function (index, el) {
                 item = django.jQuery(el).find(`#id_comments-${index}-is_active`)
-                !django.jQuery(item).attr('checked') ? django.jQuery(el).css({display: 'none'}) : django.jQuery(el).css({display: 'block'})
+                !django.jQuery(item).attr('checked') ? django.jQuery(el).hide() : django.jQuery(el).show()
             })
 
 
@@ -17,9 +17,9 @@ window.addEventListener("load", function () {
                     django.jQuery.each(a, function (index, el) {
                         item = django.jQuery(el).find(`#id_comments-${index}-is_active`)
                         if (!django.jQuery(item).attr('checked') && django.jQuery(el).is(":visible")) {
-                            django.jQuery(el).css({display: 'none'})
+                            django.jQuery(el).hide()
                         } else {
-                            django.jQuery(el).css({display: 'block'})
+                            django.jQuery(el).show()
                         }
 
                     })
