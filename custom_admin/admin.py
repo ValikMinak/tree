@@ -11,7 +11,6 @@ from custom_admin.resources import CommentResource
 
 class CommentsInline(admin.TabularInline):
     model = Comment
-    classes = ('collapse',)
     extra = 0
 
 

@@ -3,3 +3,23 @@
     justify-content: center;
     align-items: center;
 }
+
+.jquery {
+    margin-right: 20px;
+}
+
+.back {
+    margin-left: 20px;
+}
+
+.query_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.change_color {
+    color: #94b24d;
+    cursor: pointer;
+}
