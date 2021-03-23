@@ -1,0 +1,23 @@
+{% extends 'admin/change_form.html' %}
+{% load static %}
+
+{% block admin_change_form_document_ready %}
+    {{ block.super }}
+    {#    <script src="{% static 'app/formset_handlers.js' %}"></script>#}
+    <script>
+        (function ($) {
+            $('#id_is_active').on('click', function () {
+                if ($('#id_active_name').prop('checked') === true) {
+                    $('#id_active_name').prop('readonly', false)
+                    $('#id_active_name').val('')
+                    $('#id_active_name').css('background-color', 'white')
+
+                } else {
+                    $('#id_active_name').prop('readonly', true)
+                    $('#id_active_name').val('')
+                    $('#id_active_name').css('background-color', 'lightgray')
+                }
+            })
+        })(django.jQuery);
+    </script>
+{% endblock %}

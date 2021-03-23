@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.forms import ModelForm
+
 from .models import *
 from django.utils import timezone
 from django.utils import timezone
@@ -10,7 +12,7 @@ from custom_admin.resources import CommentResource
 class CommentsInline(admin.TabularInline):
     model = Comment
     classes = ('collapse',)
-    extra = 1
+    extra = 0
 
 
 class BlogAdmin(admin.ModelAdmin):
@@ -65,12 +67,28 @@ class BlogAdmin(admin.ModelAdmin):
         count = queryset.update(is_draft=False)
         self.message_user(request, f'Success message {count}')
 
+    class Media:
+        js = ('custom_admin/js/change_bool.js',)
+
+
+class CommentAdminForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        instance = kwargs.get('instance')
+        if not instance.is_active:
+            self.fields['active_name'].widget.attrs.update({
+                'readonly': True, 'style': 'background-color:lightgray'
+            })
+
 
 class CommentAdmin(ImportExportModelAdmin):
+    form = CommentAdminForm
+    change_form_template = 'custom_admin/form_for_active.html'
     list_display = ('blog', 'body', 'date_created', 'is_active', 'get_html_photo',)
     list_editable = ('body', 'is_active',)
     list_filter = ('body',)
-    fields = ('blog', 'body', 'is_active', 'get_html_photo',)
+    fields = ('blog', 'body', ('active_name', 'is_active',), 'get_html_photo',)
     readonly_fields = ('date_created', 'get_html_photo',)
 
     # Чтобы создать импотр экспорт качаешь django-import-export

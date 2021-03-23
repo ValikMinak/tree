@@ -29,6 +29,7 @@ class Comment(models.Model):
     is_active = models.BooleanField(default=True)
     date_created = models.DateTimeField(auto_now_add=True)
     photo = models.ImageField(blank=True, null=True, upload_to='photos/%y/%m')
+    active_name = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.blog.title
