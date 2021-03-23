@@ -4,7 +4,7 @@
 //         console.log(a)
 //     })
 // }
-//
+console.log('aaa')
 
 $(document).ready(function () {
 

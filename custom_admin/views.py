@@ -9,3 +9,10 @@ class ViewValidation(FormView):
     form_class = ValidForm
     template_name = 'custom_admin/validation.html'
     success_url = '/'
+
+
+class ViewForJquery(FormView):
+    model = Blog
+    form_class = ValidForm
+    template_name = 'custom_admin/for_jquery.html'
+    success_url = '/'

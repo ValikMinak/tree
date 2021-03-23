@@ -3,14 +3,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
+    <link rel="stylesheet" href="{% static 'custom_admin/css/main.css' %}">
     <title>Title</title>
+    <script src="{% static 'custom_admin/js/jquery.js' %}"></script>
 </head>
 <body>
-<div>
+<div class="main">
+    <a class="jquery" href="{% url 'custom_admin:jquery' %}">jquery</a>
     {% block content %}
 
     {% endblock %}
+    <a class="back" href="/">back</a>
+
 </div>
+<script src="{% static 'custom_admin/jquery/jquery.js' %}"></script>
 </body>
 </html>
