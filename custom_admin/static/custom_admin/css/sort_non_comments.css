@@ -1,0 +1,17 @@
+.remove_non_comments {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.remove_non_comments button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.remove_non_comments button:hover{
+    opacity: .7;
+}

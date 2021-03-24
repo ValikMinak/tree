@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.forms import ModelForm
+from django.http import HttpResponseRedirect
+from django.urls import path
 
 from .models import *
 from django.utils import timezone
@@ -15,6 +17,7 @@ class CommentsInline(admin.TabularInline):
 
 
 class BlogAdmin(admin.ModelAdmin):
+    change_list_template = 'custom_admin/blog/change_list.html'
     list_display = (
         'title', 'last_modified', 'body', 'date_created', 'is_draft', 'day_since_creation', 'no_of_comments',)
     list_filter = ('is_draft',)
@@ -44,6 +47,10 @@ class BlogAdmin(admin.ModelAdmin):
                      request):  # создаёшь ф-ю кот-я возвращ нужные даныне и потом метод (ниже), котор вставляет их в поле
         queryset = super().get_queryset(request)
         queryset = queryset.annotate(comments_count=Count('comments'))
+
+        # Фильтрация по связанным полям
+        # queryset = queryset.annotate(with_comments=Count('comments')).filter(with_comments__gt=0)
+
         return queryset
 
     def no_of_comments(self, blog):  # вызываешь его в блогАдмин оно передает инстанс блог и в нем находишь кол-во
@@ -66,7 +73,20 @@ class BlogAdmin(admin.ModelAdmin):
         count = queryset.update(is_draft=False)
         self.message_user(request, f'Success message {count}')
 
+    def get_urls(self):
+        urls = super(BlogAdmin, self).get_urls()
+        custom_urls = [
+            path('toggle_blogs/', self.toggle_blogs_by_comments, name='change_slug'),
+        ]
+        return custom_urls + urls
+
+    def toggle_blogs_by_comments(self, request):
+        return HttpResponseRedirect('../')
+
     class Media:
+        css = {
+            'all': ('custom_admin/css/sort_non_comments.css',)
+        }
         js = ('custom_admin/js/change_bool.js',)
 
 
