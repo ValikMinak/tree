@@ -143,7 +143,18 @@ class CommentAdmin(ImportExportModelAdmin):
     get_html_photo.short_description = "Миниатюра"
 
 
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ("name", 'is_active', 'get_blogs_count')
+
+    def get_queryset(self, request):
+        queryset = super(CategoryAdmin, self).get_queryset(request)
+        queryset = queryset.annotate(blogs_count=Count('comments'))
+
+    def get_blogs_count(self, category):
+        return category.blogs_count
+
+
 admin.site.register(Blog, BlogAdmin)
-admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)
 
 admin.site.register(Comment, CommentAdmin)
